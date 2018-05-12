@@ -14,7 +14,7 @@ export default class BusesList extends Component {
 
 	renderBus() {
 
-		return this.props.Bus.map((p, i) => 
+		return this.props.bus.map((p, i) => 
 			<Bus 
 				key={i}
 				bus={p}>

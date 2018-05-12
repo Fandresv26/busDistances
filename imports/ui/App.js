@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from "meteor/react-meteor-data";
-import * as d3 from "d3";
-
-import BusesList from "./BusesList.jsx";
-
-//Components
-import ApisTester from "./ApisTester.jsx";
-import UserNavBar from "../Navs/UserNavBar.jsx";
+import AccountsUIWrapper from "./AccountsUIWrapper.js";
+import Visualization from "./Visualization.js";
 
 class App extends Component {
     constructor(props) {
@@ -32,13 +27,8 @@ class App extends Component {
 
         return (
             <div id="App">
-                <UserNavBar />
+                <AccountsUIWrapper />
 
-                <div className="container">
-                    <h1>App</h1>
-                    <hr className="my-4" />
-                    <BusesList> buses={this.state.buses}</BusesList>
-                </div>
             </div>
         );
     }
@@ -58,3 +48,5 @@ export default withTracker(
         }
     }
 )(App);
+
+

@@ -1,26 +1,32 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { check } from "meteor/check";
+import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
 
+export const Comments = new Mongo.Collection("comments");
 
 if (Meteor.isServer) {
-
-    Meteor.publish('Events', function EventsPublication() {
-        return Events.find();
+    //This code only runs on the server
+    Meteor.publish("comments", function CommentsPublication() {
+        return Comments.find();
     });
 
-    const addMethodNameRule = {
+    const addComment = {
+        userId(userId) {
+            const user = Meteor.users.findOne(userId);
+            return user;
+        },
         type: 'method',
-        name: 'MyMethodName'
+        name: 'comments.publication'
     };
     
-    DDPRateLimiter.addRule(addMethodNameRule, 5, 2000);
+    DDPRateLimiter.addRule(publishComment, 5, 2000);
 }
 
 Meteor.methods({
-    "SomeApiOrDB.myMethod"(var1, var2){
-        check(var1);
-        check(var2);
+    "comments.publishComment"(r, c){
+        route: r,
+        comment: c 
 
     }
 });
